@@ -6,12 +6,11 @@
 
 ## List of implement ideas
 
-- controller and struture of project [required]
-- jwtbearer token 'blocked routers if not has access' [required]
 - database 'i need implement database in the project' [optional]
 
 ## To Do 
-- starting structure project.
+- create angular project-01 to implement this api.
 
 ## Ready 
-- ... nothing 😥
+- controller and struture of project [required]
+- jwtbearer token 'blocked routers if not has access' [required]
