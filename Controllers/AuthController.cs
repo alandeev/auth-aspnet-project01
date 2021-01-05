@@ -6,6 +6,7 @@ using backend_aspnet_crud.Repositories;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using backend_aspnet_crud.Services;
 
 namespace backend_aspnet_crud.Controller
 {
@@ -50,7 +51,9 @@ namespace backend_aspnet_crud.Controller
                 return new ObjectResult(new { errors = errors }) { StatusCode = 401 };
             }
 
-            return user;
+            var token = TokenService.GenerateToken(user);
+
+            return new ObjectResult(new { token = $"Bearer {token}" });
         }
     }
 }
