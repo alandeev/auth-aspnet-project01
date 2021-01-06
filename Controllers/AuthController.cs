@@ -29,9 +29,10 @@ namespace backend_aspnet_crud.Controller
 
             try{
                 await context.AddAsync(user);
-                return Ok();
+                return NoContent();
             }catch(Exception error){
-                return BadRequest(error.Message);
+                var errors = new List<string> {error.Message};
+                return new ObjectResult(new { errors = errors }) { StatusCode = 401 };
             }
         }
 
