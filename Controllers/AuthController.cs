@@ -29,6 +29,7 @@ namespace backend_aspnet_crud.Controller
 
             try{
                 await context.AddAsync(user);
+                
                 return NoContent();
             }catch(Exception error){
                 var errors = new List<string> {error.Message};
