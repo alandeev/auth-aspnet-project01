@@ -23,13 +23,12 @@ namespace backend_aspnet_crud.Controller
             var user = new User {
                 name = model.name,
                 username = model.username,
-                password = model.password,
-                role = model.role
+                password = model.password
             };
 
             try{
                 await context.AddAsync(user);
-                
+
                 return NoContent();
             }catch(Exception error){
                 var errors = new List<string> {error.Message};
