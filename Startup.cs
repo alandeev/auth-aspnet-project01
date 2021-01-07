@@ -8,6 +8,7 @@ using backend_aspnet_crud.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,8 @@ namespace backend_aspnet_crud
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend_aspnet_crud v1"));
+            }else {
+                app.UseHsts();
             }
 
             app.UseCors(x => x
@@ -83,9 +86,15 @@ namespace backend_aspnet_crud
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.Run( async(context) => {
+                await context.Response.WriteAsync("Could Not Find Anything");
             });
         }
     }
