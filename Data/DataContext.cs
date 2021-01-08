@@ -7,5 +7,6 @@ namespace backend_aspnet_crud.Data
         public DataContext(DbContextOptions<DataContext> options): base(options) {}
         public DbSet<User> Users { get; set; }
         public DbSet<FileM> Files { get; set; }
+        public DbSet<Post> Posts { get; set; }
     } 
 }
