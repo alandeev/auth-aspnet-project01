@@ -53,6 +53,7 @@ namespace backend_aspnet_crud
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
             services.AddScoped<DataContext, DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

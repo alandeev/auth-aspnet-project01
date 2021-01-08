@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace backend_aspnet_crud.Repositories {
     public interface IUserRepository {
-        public Task<bool> AddAsync(User user);
-        public Task<List<User>> GetUsers();
-        public Task<User> findByUsername(string username);
+        Task<bool> AddAsync(User user);
+        Task<List<User>> GetUsers();
+        Task<User> findByUsername(string username);
     }    
 }

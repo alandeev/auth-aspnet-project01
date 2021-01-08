@@ -30,7 +30,7 @@ namespace backend_aspnet_crud.Entities.UserDTO
         [MinLength(6, ErrorMessage="This field must be at least 6 characters")]
         [MaxLength(20, ErrorMessage="This field must have a maximum of 20 characters")]
         public string password { get; set; }
-        public string role { get; set; }= "member";
+        public string role { get; set; } = "member";
     }
 
     public class UserFindByUsernameDTO {

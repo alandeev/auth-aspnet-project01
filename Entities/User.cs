@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend_aspnet_crud.Entities
 {
-    public class User: IUser {
+    public class User {
 
         [Key]
         public int id { get; set; }
@@ -10,5 +10,6 @@ namespace backend_aspnet_crud.Entities
         public string username { get; set; }
         public string password { get; set; }
         public string role { get; set; } = "member";
+        public FileM Image { get; set; }
     }
 }

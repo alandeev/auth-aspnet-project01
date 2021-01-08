@@ -15,41 +15,9 @@ using System.IO;
 
 namespace backend_aspnet_crud.Controller
 {
-
-    public class FileUPloadAPI {
-        public IFormFile files { get; set; }
-    }
-
     [ApiController]
     [Route("v1")]
     public class AuthController : ControllerBase {
-        public static IWebHostEnvironment _environment;
-        public AuthController(IWebHostEnvironment environment){ _environment = environment; }
-
-        [HttpPost]
-        [Route("uploads")]
-        public string UploadFile([FromForm] FileUPloadAPI objFile){
-            try{
-                Console.WriteLine(_environment.WebRootPath);
-                if(objFile.files.Length > 0){
-                    Console.WriteLine("0");
-                    if(!Directory.Exists(_environment.WebRootPath+"\\Upload\\")) {
-                        Directory.CreateDirectory(_environment.WebRootPath+"\\Upload\\");
-                    }
-                    using (FileStream fileStream = System.IO.File.Create(_environment.WebRootPath+"\\Upload\\"+objFile.files.FileName)) {
-                        objFile.files.CopyTo(fileStream);
-                        fileStream.Flush();
-                        return "\\Upload\\"+objFile.files.FileName;
-                    }
-                }
-                Console.WriteLine("salvou");
-                return "uploaded";
-            }catch (Exception ex) {
-                Console.WriteLine("error");
-                return ex.Message;
-            }
-        }
-
         [HttpPost]
         [Route("register")]
         public async Task<ActionResult<User>> store(
