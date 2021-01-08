@@ -30,7 +30,7 @@ namespace backend_aspnet_crud.Controller
             var user = await userContext.findByUsername(username);
             
             if(user == null){
-                return new ObjectResult(new { errors = new List<string> {"user not found"} });
+                return new ObjectResult(new { errors = new List<string> {"user not found"} }) { StatusCode = 401 };
             }
 
             var image = fileContext.findFileByUserId(user.id);
@@ -61,27 +61,30 @@ namespace backend_aspnet_crud.Controller
 
             var ImagePath = environment.WebRootPath+"\\Upload\\";
             var Extension = Path.GetExtension(files[0].FileName);
-            var RelativeImagePath = ImagePath + user.id + Extension;
+            var fileName = files[0].FileName + "-" + user.id + Extension;
+            var RelativeImagePath = ImagePath + fileName;
 
             try{
+                var hasFile = fileContext.findFileByUserId(user.id);
+                if(hasFile != null){
+                    fileContext.deleteFile(hasFile);
+                    System.IO.File.Delete(hasFile.path);
+                }
                 using (FileStream fileStream = System.IO.File.Create(RelativeImagePath)) {
                     files[0].CopyTo(fileStream);
                     fileStream.Flush();
 
-                    var hasFile = fileContext.findFileByUserId(user.id);
-                    if(hasFile == null){
-                        var file = new FileM() { 
-                            filename = files[0].FileName,
-                            path = RelativeImagePath,
-                            UserId = user.id
-                        };
+                    var file = new FileM() { 
+                        filename = fileName,
+                        path = RelativeImagePath,
+                        UserId = user.id
+                    };
 
-                        fileContext.addFile(file);
-                        return Ok("\\Upload\\"+RelativeImagePath);
-                    }   
-                    return BadRequest();
+                    fileContext.addFile(file);
+                    return Ok(fileName);
                 }
             }catch (Exception ex){
+                Console.WriteLine("PROBLEM FINAL ERROR");
                 return BadRequest(ex.Message);
             }
         }

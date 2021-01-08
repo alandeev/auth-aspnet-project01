@@ -16,6 +16,11 @@ namespace backend_aspnet_crud.Repositories
             await this._dataContext.SaveChangesAsync();
         }
 
+        public void deleteFile(FileM file)
+        {
+            this._dataContext.Files.Remove(file);
+        }
+
         public FileM findFileByUserId(int user_id){
             return this._dataContext.Files.FirstOrDefault((file) => file.UserId == user_id);
         }
