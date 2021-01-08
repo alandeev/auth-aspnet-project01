@@ -77,7 +77,8 @@ namespace backend_aspnet_crud.Controller
                     var file = new FileM() { 
                         filename = fileName,
                         path = RelativeImagePath,
-                        UserId = user.id
+                        UserId = user.id,
+                        link = "https://localhost:5001/upload/"+fileName
                     };
 
                     fileContext.addFile(file);
