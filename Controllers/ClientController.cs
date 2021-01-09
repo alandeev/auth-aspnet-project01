@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Http;
+using backend_aspnet_crud.Data;
 
 namespace backend_aspnet_crud.Controller
 {
@@ -46,6 +47,7 @@ namespace backend_aspnet_crud.Controller
         public async Task<ActionResult> UploadFileAsync(
             [FromServices] IFileRepository fileContext,
             [FromServices] IUserRepository userContext,
+            [FromServices] DataContext dataContext,
             [FromServices] IWebHostEnvironment environment
         ){
             var username = this.User.Identity.Name;
@@ -61,7 +63,7 @@ namespace backend_aspnet_crud.Controller
 
             var ImagePath = environment.WebRootPath+"\\Upload\\";
             var Extension = Path.GetExtension(files[0].FileName);
-            var fileName = files[0].FileName + "-" + user.id + Extension;
+            var fileName = user.username + "-" + user.id + Extension;
             var RelativeImagePath = ImagePath + fileName;
 
             try{
@@ -81,7 +83,9 @@ namespace backend_aspnet_crud.Controller
                         link = "https://localhost:5001/upload/"+fileName
                     };
 
+                    user.Image = file;
                     fileContext.addFile(file);
+                    await dataContext.SaveChangesAsync();
                     return Ok(fileName);
                 }
             }catch (Exception ex){

@@ -20,11 +20,11 @@ namespace backend_aspnet_crud.Repositories
         }
 
         public Task<List<Post>> GetPosts() {
-            return this._dataContext.Posts.ToListAsync();
+            return this._dataContext.Posts.Include(x => x.User).Include(x => x.User.Image).ToListAsync();
         }
 
         public Task<List<Post>> getPostsByUserId(int user_id) {
-            return this._dataContext.Posts.Where((post) => post.UserId == user_id).ToListAsync();
+            return this._dataContext.Posts.Where((post) => post.UserId == user_id).Include(x => x.User).Include(x => x.User.Image).ToListAsync();
         }
     }    
 }

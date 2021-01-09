@@ -40,6 +40,10 @@ namespace backend_aspnet_crud.Controller
             }
 
             var posts = await postContext.GetPosts();
+            var a = posts.Select((post) => {
+                Console.WriteLine(post.User.Image);
+                return post;
+            });
             return posts;
         }
 
@@ -63,6 +67,9 @@ namespace backend_aspnet_crud.Controller
             };
 
             postContext.AddAsync(post);
+            
+            post.User = user;
+            
             return Ok(post);
         }
     }
